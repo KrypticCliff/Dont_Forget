@@ -35,11 +35,6 @@ int main(int argc, char** argv) {
           return 0;
      }
 
-     // Parameters to compress image to PNG
-     cv::Mat img = cv::CommandLineParser::get<cv::Mat>("@image");
-     cv::String img_name = cv::CommandLineParser::get<cv::String>("@image");
-     cv::resize(img, img_rs, cv::Size(50,50));
-
      // Parameters to compress image to PNG 
      std::vector<int> compression_params;
      compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
