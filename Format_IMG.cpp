@@ -11,13 +11,13 @@ int main(int argc, char** argv) {
 //     char* filename[MAX_SIZE];
      const cv::String keys =
 	     "{help h     |      | Prints help message      }"
-	     "{@image 	   |      | image used for resizing }"
-             "{@height    |50    | Sets the height of image }"
+	     "{@image 	   |<none>| image used for resizing  }"
+          "{@height    |50    | Sets the height of image }"
 	     "{@width     |50    | Sets the width of image  }"
-	     "{path       |.     | path to image files      }";
+	     "{path       |./    | path to image files      }";
 
      cv::CommandLineParser parser(argc, argv, keys);
-	
+
      // If Help is passed, output help message
      if (parser.has("help")) {
      	parser.printMessage();
@@ -25,7 +25,9 @@ int main(int argc, char** argv) {
 
      // Grabs image from Command Parser for reimaging
      cv::String img_name = parser.get<cv::String>(0);
-     cv::Mat img = cv::imread("/home/kryptic/OpenCV_Practice/index.png");
+     cv::String img_path = parser.get<cv::String>("path");
+     std::cout << img_path + img_name << "\n";
+     cv::Mat img = cv::imread(img_path + img_name);
      cv::resize(img, img_rs, cv::Size(parser.get<double>(1),parser.get<double>(2)),
                 0, 0, cv::INTER_NEAREST);
 
@@ -35,17 +37,17 @@ int main(int argc, char** argv) {
           return 0;
      }
 
-     // Parameters to compress image to PNG 
+     // Parameters to compress image to PNG
      std::vector<int> compression_params;
      compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
      compression_params.push_back(9);
 
      // Writes image to location
      try {
-	 cv::imwrite(img_name, img, compression_params);
+	 cv::imwrite("Test.png", img_rs, compression_params);
      }
      catch (cv::Exception& ex) {
-	 fprintf(stderr, "Exception coverting image to PNG: %s\n", 
+	 fprintf(stderr, "Exception coverting image to PNG: %s\n",
 		 ex.what());
 	 return 1;
      }
