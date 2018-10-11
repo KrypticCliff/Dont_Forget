@@ -5,6 +5,7 @@
 #include "boost/filesystem.hpp"
 #include "opencv2/objdetect.hpp"
 #include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
 
 namespace fs = boost::filesystem;
 
@@ -21,13 +22,15 @@ int main(int argc, char** argv) {
 
      fs::recursive_directory_iterator begin(p), end;
 
+     // Iterate through folder findes img files and converts to Grayscale
      try {
-     // Iterate through folder for img files and converts to Grayscale
           for (; begin != end; begin++) {
                if (fs::is_regular_file(begin->path())) {
+               int img_counter = 0;
                //std::cout << begin->path().string() << " has been selected.\n";
                // Places grayscale MAT into img_v vector
                img_v.push_back(cv::imread(begin->path().string(), cv::IMREAD_GRAYSCALE));
+               cv::resize(img_v[img_counter], img_v[img_counter], cv::Size(100,100));
                }
           }
      }
