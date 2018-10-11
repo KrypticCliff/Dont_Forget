@@ -1,7 +1,6 @@
 /*Converts images to 50x50 PNG images for Cascade learning*/
 
 #include <iostream>
-#include <experimental/filesystem>
 #include <string>
 #include "opencv2/imgproc.hpp"
 #include "opencv2/imgcodecs.hpp"
