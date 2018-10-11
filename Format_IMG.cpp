@@ -28,9 +28,7 @@ int main(int argc, char** argv) {
      // Grabs image from Command Parser for reimaging
      cv::String img_name = parser.get<cv::String>(0);
      cv::String img_path = parser.get<cv::String>("path");
-
-     // TESTING Parser.get
-     // std::cout << img_path + img_name << "\n";
+     cv::String img_fulln = img_path + img_name;
 
      cv::Mat img = cv::imread(img_path + img_name);
      cv::resize(img, img_rs, cv::Size(parser.get<double>(1),parser.get<double>(2)),
@@ -49,7 +47,7 @@ int main(int argc, char** argv) {
 
      // Writes image to location
      try {
-	 cv::imwrite((img_name), img_rs, compression_params);
+	 cv::imwrite((img_fulln + ".png"), img_rs, compression_params);
       // Move file to new location
      }
      catch (cv::Exception& ex) {
