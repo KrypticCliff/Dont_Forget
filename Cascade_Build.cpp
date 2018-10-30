@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 
      fs::recursive_directory_iterator begin(p), end;
 
-     // Iterate through folder findes img files and converts to Grayscale
+     // Iterate through folder finds img files and converts to Grayscale
      try {
           for (int counter = 0; begin != end; begin++, counter++) {
                if (fs::is_regular_file(begin->path())) {
