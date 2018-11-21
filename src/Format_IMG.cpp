@@ -31,6 +31,7 @@ int main(int argc, char** argv) {
      }
 
      // Grabs image from Command Parser for reimaging
+     cv::String blank    = "";
      cv::String img_name = parser.get<cv::String>(0);
      cv::String img_path = parser.get<cv::String>("path");
      cv::String img_np   = parser.get<cv::String>("new_path");
@@ -38,10 +39,7 @@ int main(int argc, char** argv) {
      cv::String img_fp   = img_path + img_name;
      cv::String img_nfp  = img_np + img_name;
 
-     // Concatinate ending extension
-     std::size_t ext_loc = img_name.find(".jpeg");
-     std::cout << ext_loc;
-
+     // Place into img Mat, resize iamge to 50x50
      cv::Mat img = cv::imread(img_fp);
      cv::resize(img, img_rs, cv::Size(parser.get<double>(1),parser.get<double>(2)),
                 0, 0, cv::INTER_NEAREST);
@@ -52,14 +50,9 @@ int main(int argc, char** argv) {
           return 0;
      }
 
-     // Parameters to compress image to PNG
-     std::vector<int> compression_params;
-     compression_params.push_back(cv::IMWRITE_PNG_COMPRESSION);
-     compression_params.push_back(9);
-
      // Writes image to location
      try {
-	 cv::imwrite((img_nfp + ".png"), img_rs, compression_params);
+	 cv::imwrite((img_nfp + ".png"), img_rs);
       // Move file to new location
      }
      catch (cv::Exception& ex) {
