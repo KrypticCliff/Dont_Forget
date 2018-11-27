@@ -29,13 +29,12 @@ int main(int argc, char** argv) {
      }
 
      // Grabs image from Command Parser for reimaging
-     cv::String blank    = "";
      cv::String img_name = parser.get<cv::String>(0);
      cv::String img_path = parser.get<cv::String>("path");
-     cv::String img_np   = parser.get<cv::String>("new_path");
+     cv::String img_np   = parser.get<cv::String>("new_path"); // New Path
 
-     cv::String img_fp   = img_path + img_name;
-     cv::String img_nfp  = img_np + img_name;
+     cv::String img_fp   = img_path + img_name;                // Full Path
+     cv::String img_nfp  = img_np + img_name;                  // Full New Path
 
      // Checks if parser has thrown any errors
      if (!parser.check()) {
@@ -51,6 +50,7 @@ int main(int argc, char** argv) {
 
           // Writes image to cvt_pos_img location
 	     cv::imwrite(img_nfp, img_rs);
+
      } // Try
 
      catch (cv::Exception& ex) {
