@@ -13,14 +13,12 @@ EX:  ./Format_IMG Test.jpg
 
 int main(int argc, char** argv) {
      cv::Mat img_rs;
-//     const int MAX_SIZE = 255; TEST
-//     char* filename[MAX_SIZE]; TEST
      const cv::String keys =
-	     "{help h     |                    | Prints help message     }"
-	     "{@image 	   |<none>              | image used for resizing }"
+          "{help h     |                    | Prints help message     }"
+          "{@image 	   |<none>              | image used for resizing }"
           "{@height    |50                  | Sets the height of image}"
-	     "{@width     |50                  | Sets the width of image }"
-	     "{path       |../img/pos_img/     | path to image files     }"
+          "{@width     |50                  | Sets the width of image }"
+          "{path       |../img/pos_img/     | path to image files     }"
           "{new_path   |../img/cvt_pos_img/ | New path for imgs       }";
 
      cv::CommandLineParser parser(argc, argv, keys);
@@ -39,29 +37,27 @@ int main(int argc, char** argv) {
      cv::String img_fp   = img_path + img_name;
      cv::String img_nfp  = img_np + img_name;
 
-     // Place into img Mat, resize iamge to 50x50
-     cv::Mat img = cv::imread(img_fp);
-     cv::resize(img, img_rs, cv::Size(parser.get<double>(1),parser.get<double>(2)),
-                0, 0, cv::INTER_NEAREST);
-
      // Checks if parser has thrown any errors
      if (!parser.check()) {
           parser.printErrors();
           return 0;
      }
 
-     // Writes image to location
      try {
-	 cv::imwrite((img_nfp + ".png"), img_rs);
-      // Move file to new location
-     }
+          // Places 'fp' into 'img' Mat, resize image to 50x50
+          cv::Mat img = cv::imread(img_fp);
+          cv::resize(img, img_rs, cv::Size(parser.get<double>(1),parser.get<double>(2)),
+                         0, 0, cv::INTER_NEAREST);
+
+          // Writes image to cvt_pos_img location
+	     cv::imwrite(img_nfp, img_rs);
+     } // Try
+
      catch (cv::Exception& ex) {
-	 fprintf(stderr, "Exception coverting image to PNG: %s\n",
+	 fprintf(stderr, "Error creating Matrix image: %s\n",
 		 ex.what());
 	 return 1;
      }
-
-     // CATCH move file to new location
 
      return 0;
 }
